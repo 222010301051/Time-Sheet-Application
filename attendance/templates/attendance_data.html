@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333333;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>Attendance</h1>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Shift</th>
+      <th>Project Type</th>
+      <th>Login Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for att in attendance %}
+    <tr>
+      <td>{{ att.date }}</td>
+      <td>{{ att.shift }}</td>
+      <td>{{ att.project_type }}</td>
+      <td>{{ att.login_time }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</body>
+</html>

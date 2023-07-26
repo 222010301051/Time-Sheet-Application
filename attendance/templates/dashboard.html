@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>E3 Attendance</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      background-color: #fff;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    input[type="text"],
+    select,
+    input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+
+    select {
+      height: 40px;
+      appearance: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      background-color: #fff;
+      background-image: linear-gradient(to bottom, #f9f9f9, #e8e8e8);
+      border: 1px solid #bbb;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+      color: #555;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #66afe9;
+      box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+    }
+
+    select option {
+      font-weight: normal;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    #confirmation {
+      display: none;
+      background-color: #dff0d8;
+      color: #3c763d;
+      padding: 10px;
+      margin-top: 20px;
+      text-align: center;
+      border: 1px solid #d6e9c6;
+      border-radius: 5px;
+
+    }
+
+    .calendar-icon {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: url("calendar-icon.png") no-repeat;
+      background-size: cover;
+      margin-left: 5px;
+      cursor: pointer;
+      vertical-align: middle;
+    }
+
+    img.logo {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 100px;
+      height: 100px;
+    }
+
+    .flex-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .view-button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .disabled-link {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<link rel="shortcut icon" href="https://png.pngtree.com/element_pic/00/16/09/2057e0eecf792fb.jpg">
+<body>
+  <h1>E3 Form</h1>
+  <form action="../../submit_attendance/" method="POST" onsubmit="return showConfirmation()">
+    {% csrf_token %}
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" required>
+    <span class="calendar-icon" onclick="showCalendar()"></span><br>
+
+
+    <label for="shift">Shift:</label>
+    <select id="shift" name="shift" required>
+      <option value="">-- Select Shift --</option>
+      <option value="General">General</option>
+      <option value="First">First</option>
+      <option value="Second">Second</option>
+      <option value="Night">Night</option>
+      <option value="WFH">WFH</option>
+    </select>
+
+    <label for="project-type">Project Type:</label>
+    <select id="project-type" name="project-type" required>
+      <option value="">-- Select Project Type --</option>
+      <option value="Medtronics-India">Medtronic</option>
+      <option value="Covidian-Embedded-Engineer">Covidian-Embedded-Engineer</option>
+    </select>
+
+    <label for="login-time">Login Time:</label>
+    <select id="login-time" name="login-time" required>
+      <option value="">-- Select Login Time --</option>
+      <option value="0">0 hrs</option>
+      <option value="4">4 hrs</option>
+      <option value="9">9 hrs</option>
+    </select>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <div id="confirmation">
+    <p>Successfully Submitted!</p>
+  </div>
+
+  <!---<div class="flex-container">
+    <a href="../../attendance_table/" class="view-button {% if not form_submitted %}disabled-link{% endif %}">View Attendance Data</a>
+  </div>
+  -->
+  <div class="flex-container">
+    {% if form_submitted %}
+        <a href="../../attendance_table/" class="view-button">View Attendance Data</a>
+    {% else %}
+        <a href="#" class="view-button disabled-link">View Attendance Data</a>
+    {% endif %}
+</div>
+
+  <script>
+    function showConfirmation() {
+      document.getElementById("confirmation").style.display = "block";
+      return true;
+    }
+
+    function showCalendar() {
+      var dateField = document.getElementById("date");
+      dateField.type = "date";
+      dateField.focus();
+    }
+  </script>
+</body>
+</html>
